@@ -1,0 +1,36 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {};
+	objectVersion = 56;
+	objects = {
+		A10000000000000000000001 /* i12_Jailbreak_LabApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = i12_Jailbreak_LabApp.swift; sourceTree = "<group>"; };
+		A10000000000000000000002 /* DeviceAudit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceAudit.swift; sourceTree = "<group>"; };
+		A10000000000000000000003 /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
+		A10000000000000000000006 /* FirmwareManifestAudit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirmwareManifestAudit.swift; sourceTree = "<group>"; };
+		A10000000000000000000007 /* EvidenceDatabase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvidenceDatabase.swift; sourceTree = "<group>"; };
+		A10000000000000000000004 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A10000000000000000000005 /* i12_Jailbreak_Lab.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = i12_Jailbreak_Lab.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A20000000000000000000001 /* Sources */ = {isa = PBXGroup; children = (A10000000000000000000001, A10000000000000000000002, A10000000000000000000003, A10000000000000000000006, A10000000000000000000007, ); path = Sources; sourceTree = "<group>"; };
+		A20000000000000000000002 /* i12_Jailbreak_Lab */ = {isa = PBXGroup; children = (A20000000000000000000001, A10000000000000000000004, ); path = i12_Jailbreak_Lab; sourceTree = "<group>"; };
+		A20000000000000000000003 = {isa = PBXGroup; children = (A20000000000000000000002, A20000000000000000000006, ); sourceTree = "<group>"; };
+		A20000000000000000000006 /* Products */ = {isa = PBXGroup; children = (A10000000000000000000005, ); name = Products; sourceTree = "<group>"; };
+		A30000000000000000000001 /* i12_Jailbreak_LabApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000001; };
+		A30000000000000000000002 /* DeviceAudit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000002; };
+		A30000000000000000000003 /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000003; };
+		A30000000000000000000004 /* FirmwareManifestAudit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000006; };
+		A30000000000000000000005 /* EvidenceDatabase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000000000000000000007; };
+		A40000000000000000000001 /* Sources */ = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (A30000000000000000000001, A30000000000000000000002, A30000000000000000000003, A30000000000000000000004, A30000000000000000000005, ); runOnlyForDeploymentPostprocessing = 0; };
+		A40000000000000000000002 /* Frameworks */ = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A40000000000000000000003 /* Resources */ = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (); runOnlyForDeploymentPostprocessing = 0; };
+		A50000000000000000000001 /* i12_Jailbreak_Lab */ = {isa = PBXNativeTarget; buildConfigurationList = A60000000000000000000002; buildPhases = (A40000000000000000000002, A40000000000000000000001, A40000000000000000000003, ); buildRules = (); dependencies = (); name = i12_Jailbreak_Lab; productName = i12_Jailbreak_Lab; productReference = A10000000000000000000005; productType = "com.apple.product-type.application"; };
+		A50000000000000000000002 /* Project */ = {isa = PBXProject; attributes = {BuildIndependentTargetsInParallel = 1; LastUpgradeCheck = 1600; }; buildConfigurationList = A60000000000000000000001; compatibilityVersion = "Xcode 14.0"; developmentRegion = en; hasScannedForEncodings = 0; knownRegions = (en, Base, ); mainGroup = A20000000000000000000003; productRefGroup = A20000000000000000000006; projectDirPath = ""; projectRoot = ""; targets = (A50000000000000000000001, ); };
+		A60000000000000000000001 /* Project config list */ = {isa = XCConfigurationList; buildConfigurations = (A70000000000000000000001, A70000000000000000000002, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A60000000000000000000002 /* Target config list */ = {isa = XCConfigurationList; buildConfigurations = (A70000000000000000000003, A70000000000000000000004, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Release; };
+		A70000000000000000000001 /* Debug Project */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; }; name = Debug; };
+		A70000000000000000000002 /* Release Project */ = {isa = XCBuildConfiguration; buildSettings = {ALWAYS_SEARCH_USER_PATHS = NO; CLANG_ENABLE_MODULES = YES; IPHONEOS_DEPLOYMENT_TARGET = 16.0; SDKROOT = iphoneos; SWIFT_VERSION = 5.0; }; name = Release; };
+		A70000000000000000000003 /* Debug Target */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 12; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = i12_Jailbreak_Lab/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; MARKETING_VERSION = 1.2; PRODUCT_BUNDLE_IDENTIFIER = com.research.i12jailbreaklab; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_EMIT_LOC_STRINGS = YES; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Debug; };
+		A70000000000000000000004 /* Release Target */ = {isa = XCBuildConfiguration; buildSettings = {CODE_SIGN_STYLE = Automatic; CURRENT_PROJECT_VERSION = 12; GENERATE_INFOPLIST_FILE = NO; INFOPLIST_FILE = i12_Jailbreak_Lab/Info.plist; IPHONEOS_DEPLOYMENT_TARGET = 16.0; MARKETING_VERSION = 1.2; PRODUCT_BUNDLE_IDENTIFIER = com.research.i12jailbreaklab; PRODUCT_NAME = "$(TARGET_NAME)"; SWIFT_EMIT_LOC_STRINGS = YES; TARGETED_DEVICE_FAMILY = "1,2"; }; name = Release; };
+	};
+	rootObject = A50000000000000000000002;
+}
