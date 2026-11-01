@@ -14,8 +14,11 @@ struct DeviceAudit {
     static func collect() -> DeviceAudit {
         var system = utsname()
         uname(&system)
-        let machine = withUnsafePointer(to: &system.machine) {
-            $0.withMemoryRebound(to: CChar.self, capacity: MemoryLayout.size(ofValue: system.machine)) {
+        // Capture the tuple size before taking an inout pointer. Reading
+        // system.machine again inside the closure overlaps that exclusive access.
+        let machineCapacity = MemoryLayout.size(ofValue: system.machine)
+        let machine = withUnsafePointer(to: &system.machine) { pointer in
+            pointer.withMemoryRebound(to: CChar.self, capacity: machineCapacity) {
                 String(cString: $0)
             }
         }
