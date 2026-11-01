@@ -14,7 +14,7 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Optional
 
-VERSION = "0.4"
+VERSION = "1.4"
 TARGET_PRODUCT = "iPhone13,2"
 TARGET_IOS = "27.0"
 TARGET_BUILD = "24A437"
@@ -89,8 +89,8 @@ def assess(info: DeviceInfo) -> dict:
             "status": "NOT_SUPPORTED_FOR_IPHONE_12",
             "confidence": "HIGH — explicit project scope",
             "reason": (
-                "The current table records iPhone 11 as run and iPhone 11 Pro/Pro Max as experimental "
-                "on 27.0/27.0.1; iPhone 12/A14 is not listed. An A13 experiment is not an A14 result."
+                "The README says iPhone 11 / n104ap only. Its 24A437 row is an "
+                "iPhone 11 result; iPhone 12/A14 is not listed."
             ),
             "source": SOURCES["liter8"],
         },
@@ -99,8 +99,8 @@ def assess(info: DeviceInfo) -> dict:
             "status": "NO_MAINTAINER_COMPATIBILITY_CONFIRMATION",
             "confidence": "HIGH — issue is a request, not a support statement",
             "reason": (
-                "The issue is a compatibility request/discussion, not a maintainer-confirmed successful "
-                "test on iPhone 12/A14 and build 24A437."
+                "The issue asks whether iPhone 12 mini/A14 support can be added; "
+                "it is not evidence that A14 support exists."
             ),
             "source": SOURCES["liter8_iphone12_issue"],
         },

@@ -6,12 +6,12 @@ from __future__ import annotations
 import argparse, json
 from datetime import date
 
-VERSION = "0.6"
+VERSION = "1.4"
 TARGET = {"model": "iPhone 12", "product_type": "iPhone13,2", "chip": "A14 Bionic", "platform": "t8101", "ios": "27.0", "build": "24A437"}
 EVIDENCE = [
  {"id":"E01", "topic":"Calif Hexacon demo", "status":"CONFIRMED_DEMO", "confidence":"HIGH", "detail":"A public untethered root demo was reported on iPhone 18 Pro running iOS 27.0.1. The researchers have not published a public end-user tool or technical exploit chain in the cited reporting.", "url":"https://decrypt.co/381177/hackers-jailbreak-iphone-18-pro-survives-reboot"},
  {"id":"E02", "topic":"A14 / iPhone 12 compatibility", "status":"NOT_ESTABLISHED", "confidence":"HIGH", "detail":"The iPhone 18 Pro demonstration does not establish compatibility with iPhone 12 / A14 or build 24A437. No reproducible A14 test is identified by the cited report.", "url":"https://www.iclarified.com/102876/untethered-ios-2701-jailbreak-demonstrated-on-iphone-18-pro-video"},
- {"id":"E03", "topic":"Liter8", "status":"NOT_COMPATIBLE_BY_STATED_SCOPE", "confidence":"HIGH", "detail":"The current device table records iPhone 11 as run and iPhone 11 Pro/Pro Max as experimental on 27.0/27.0.1; it does not list iPhone 12/A14. Experimental support on an A13 device is not evidence for A14.", "url":"https://github.com/Xplo8E/Liter8"},
+ {"id":"E03", "topic":"Liter8", "status":"NOT_COMPATIBLE_BY_STATED_SCOPE", "confidence":"HIGH", "detail":"The project explicitly targets iPhone 11 (n104ap); it does not claim iPhone 12 / A14 support.", "url":"https://github.com/Xplo8E/Liter8"},
  {"id":"E04", "topic":"iOS 27.0 signing", "status":"UNSIGNED_REPORTED", "confidence":"HIGH", "detail":"Third-party firmware catalogs report build 24A437 as unsigned. Do not assume it can be restored or downgraded to; check Apple's current signing status before any restore.", "url":"https://ipsw.me/iPhone13,2/"},
  {"id":"E05", "topic":"iOS 27.2 security fixes", "status":"REPORTED_PATCH_RELEASE", "confidence":"MEDIUM", "detail":"A community fact-check tracker reports iOS 27.2 shipped 2026-10-27 and fixed several Calif-credited vulnerabilities. This is a secondary tracker, not proof of the exact exploit chain or A14 applicability.", "url":"https://github.com/iMaxTomas/ios27-jb-tracker"},
 ]
