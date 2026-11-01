@@ -1,9 +1,10 @@
+
 name: Build unsigned iOS IPA
 
 on:
   workflow_dispatch:
   push:
-    branches: [ main, master ]
+    branches: [main, master]
 
 permissions:
   contents: read
@@ -11,28 +12,32 @@ permissions:
 jobs:
   build:
     runs-on: macos-15
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
 
       - name: Build IPA
         run: |
-          xcodebuild -project i12_Jailbreak_Lab.xcodeproj \
+          xcodebuild \
+            -project i12_jailbreak_lab_v0_9/i12_Jailbreak_Lab.xcodeproj \
             -scheme i12_Jailbreak_Lab \
             -configuration Release \
             -destination 'generic/platform=iOS' \
             -archivePath "$RUNNER_TEMP/App.xcarchive" \
-            CODE_SIGNING_ALLOWED=NO archive
+            CODE_SIGNING_ALLOWED=NO \
+            archive
 
       - name: Package IPA
         run: |
           mkdir -p "$RUNNER_TEMP/ipa/Payload"
-          cp -R "$RUNNER_TEMP/App.xcarchive/Products/Applications/i12_Jailbreak_Lab.app" "$RUNNER_TEMP/ipa/Payload/"
+          cp -R "$RUNNER_TEMP/App.xcarchive/Products/Applications/i12_Jailbreak_Lab.app" \
+            "$RUNNER_TEMP/ipa/Payload/"
           cd "$RUNNER_TEMP/ipa"
-          zip -r "$RUNNER_TEMP/i12-Jailbreak-Lab.ipa" Payload
+          zip -r "$RUNNER_TEMP/i12-Jailbreak-Lab-unsigned.ipa" Payload
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
           name: i12-Jailbreak-Lab-unsigned-IPA
-          path: ${{ runner.temp }}/i12-Jailbreak-Lab.ipa
+          path: ${{ runner.temp }}/i12-Jailbreak-Lab-unsigned.ipa
