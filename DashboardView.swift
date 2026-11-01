@@ -8,6 +8,9 @@ struct DashboardView: View {
     @State private var showManifestImporter = false
     @State private var manifestResult: FirmwareManifestAudit?
     @State private var manifestError: String?
+    @State private var firmwareCatalog: [FirmwareCatalogEntry] = []
+    @State private var isLoadingCatalog = false
+    @State private var catalogError: String?
 
     var body: some View {
         NavigationStack {
@@ -16,6 +19,7 @@ struct DashboardView: View {
                     header
                     deviceCard
                     firmwareCard
+                    onlineFirmwareCard
                     statusCard
                     evidenceCard
                     evidenceLedgerCard
@@ -57,7 +61,7 @@ struct DashboardView: View {
             HStack {
                 Image(systemName: "waveform.path.ecg.rectangle").font(.system(size: 30, weight: .semibold)).foregroundStyle(.indigo)
                 Spacer()
-                Text("V1.2 · READ ONLY").font(.caption.bold()).padding(.horizontal, 10).padding(.vertical, 6)
+                Text("V1.3 · READ ONLY").font(.caption.bold()).padding(.horizontal, 10).padding(.vertical, 6)
                     .background(Color.indigo.opacity(0.12)).clipShape(Capsule())
             }
             Text("设备研究工具箱").font(.largeTitle.bold())
@@ -106,6 +110,70 @@ struct DashboardView: View {
             if let error = manifestError {
                 Text(error).font(.caption).foregroundStyle(.red)
             }
+        }.padding().background(.background).clipShape(RoundedRectangle(cornerRadius: 18))
+    }
+
+    private var onlineFirmwareCard: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Label("在线固件目录（轻量查询）", systemImage: "globe.americas").font(.headline)
+            Text("只查询 iPhone13,2 的固件版本、Build、签名状态和文件大小等目录信息，不下载 IPSW，不消耗 10GB 流量。")
+                .font(.caption).foregroundStyle(.secondary)
+            Button {
+                Task {
+                    isLoadingCatalog = true
+                    catalogError = nil
+                    do {
+                        firmwareCatalog = try await FirmwareCatalogService.fetch()
+                    } catch {
+                        catalogError = error.localizedDescription
+                    }
+                    isLoadingCatalog = false
+                }
+            } label: {
+                HStack {
+                    if isLoadingCatalog { ProgressView().padding(.trailing, 4) }
+                    Label(isLoadingCatalog ? "正在查询…" : "查询 iPhone 12 固件目录", systemImage: "arrow.down.circle")
+                    Spacer()
+                }
+                .frame(maxWidth: .infinity).padding(12)
+                .background(Color.indigo.opacity(0.12)).clipShape(RoundedRectangle(cornerRadius: 12))
+            }
+            .buttonStyle(.plain).disabled(isLoadingCatalog)
+
+            if !firmwareCatalog.isEmpty {
+                let target = firmwareCatalog.first { $0.buildid == audit.buildVersion }
+                VStack(alignment: .leading, spacing: 7) {
+                    if let target {
+                        Label("找到当前 Build：\(target.version)（\(target.buildid)）", systemImage: "checkmark.circle.fill")
+                            .font(.subheadline.bold()).foregroundStyle(.green)
+                        Text("\(target.signingLabel) · IPSW 大小：\(target.sizeLabel)")
+                            .font(.caption).foregroundStyle(.secondary)
+                    } else {
+                        Label("目录中未找到当前 Build：\(audit.buildVersion)", systemImage: "exclamationmark.triangle")
+                            .font(.subheadline.bold()).foregroundStyle(.orange)
+                    }
+                    Divider()
+                    ForEach(firmwareCatalog.prefix(6)) { item in
+                        VStack(alignment: .leading, spacing: 3) {
+                            HStack {
+                                Text("iOS \(item.version) · \(item.buildid)").font(.subheadline.weight(.medium))
+                                Spacer()
+                                Text(item.signed == true ? "Signed" : (item.signed == false ? "Unsigned" : "Unknown"))
+                                    .font(.caption2.bold()).foregroundStyle(item.signed == true ? .green : .secondary)
+                            }
+                            Text("\(item.signingLabel) · \(item.sizeLabel) · \(item.releasedate ?? "日期未知")")
+                                .font(.caption2).foregroundStyle(.secondary)
+                        }
+                        if item.id != firmwareCatalog.prefix(6).last?.id { Divider() }
+                    }
+                }
+            }
+            if let catalogError {
+                Text(catalogError).font(.caption).foregroundStyle(.red)
+            }
+            Text("数据来自第三方公开固件目录，仅供核对。在线结果不是 BuildManifest.plist，也不代表 Apple 签名状态的实时保证；需要逐字段验证时仍需导入独立清单文件。")
+                .font(.caption2).foregroundStyle(.tertiary)
+            Link("打开 iPhone 12 固件目录", destination: URL(string: "https://ipsw.me/iPhone13%2C2")!)
         }.padding().background(.background).clipShape(RoundedRectangle(cornerRadius: 18))
     }
 
@@ -225,11 +293,11 @@ private struct AboutView: View {
     var body: some View {
         NavigationStack {
             List {
-                Section("当前版本") { LabeledContent("版本", value: "1.2"); LabeledContent("目标", value: "iPhone 12 / A14 / 24A437") }
+                Section("当前版本") { LabeledContent("版本", value: "1.3"); LabeledContent("目标", value: "iPhone 12 / A14 / 24A437") }
                 Section("说明") {
-                    Text("V1.2 新增带来源链接和置信度标记的公开证据数据库。证据按设备型号、芯片和 Build 分开记录，避免把其他机型的测试结果误认为本机支持。")
+                    Text("V1.3 新增在线固件目录轻量查询，并保留 BuildManifest.plist 本地导入与证据数据库。证据按设备型号、芯片和 Build 分开记录，避免把其他机型的测试结果误认为本机支持。")
                     Text("这是只读研究工具箱。越狱状态不能仅凭文件存在、设备型号或系统版本推断。兼容性必须由精确设备与 Build 上可复现的技术证据支持。")
-                    Text("固件清单导入功能只接受 BuildManifest.plist；需先从 IPSW 容器中提取该文件。IPA 需要在 macOS 上使用 Xcode 编译，并通过有效的开发者签名或适用的侧载方式安装。本源码包不是已签名 IPA。")
+                    Text("固件清单导入功能只接受 BuildManifest.plist；需先从 IPSW 容器中提取该文件。在线目录只返回版本、Build、签名状态和文件大小等元数据，不会下载完整 IPSW 或自动提取 BuildManifest.plist。IPA 需要在 macOS 上使用 Xcode 编译，并通过有效的开发者签名或适用的侧载方式安装。本源码包不是已签名 IPA。")
                 }
             }.navigationTitle("项目说明").toolbar { ToolbarItem(placement: .topBarTrailing) { Button("完成") { dismiss() } } }
         }

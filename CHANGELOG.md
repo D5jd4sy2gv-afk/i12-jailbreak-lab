@@ -1,14 +1,11 @@
-# Changelog
+# 更新记录
 
-## V1.2 — 2026-11-01
-- Added an in-app evidence ledger with source URLs, confidence labels, and device-specific scope.
-- Added machine-readable `evidence_database.json`.
-- Added explicit caution that iPhone 11/A13 results do not establish iPhone 12/A14 compatibility.
-- Updated version/build metadata to 1.2 / 12.
+## V1.3（2026-11-01）
+- 新增 iPhone 12（iPhone13,2）在线固件目录查询。
+- 在线查询只获取版本、Build、签名状态、发布日期和 IPSW 文件大小，不下载完整 IPSW。
+- 保留 BuildManifest.plist 本地导入与字段核对。
+- 明确区分固件目录元数据与本地 BuildManifest.plist，不把目录查询伪装成清单验证。
+- 保持只读：不执行漏洞利用、提权、刷机、恢复或设备修改。
 
-## V1.1
-- Added BuildManifest.plist import and target model/build checks.
-- Added firmware and project evidence links.
-
-## V1.0
-- Added device identification, build detection, and diagnostic report sharing.
+## V1.2
+- 增加公开证据数据库、来源链接和置信度标记。
