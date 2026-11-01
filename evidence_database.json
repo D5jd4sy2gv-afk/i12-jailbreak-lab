@@ -1,0 +1,68 @@
+{
+  "schema_version": 1,
+  "snapshot_date": "2026-11-01",
+  "target": {
+    "product_type": "iPhone13,2",
+    "chip": "A14 Bionic",
+    "ios": "27.0",
+    "build": "24A437"
+  },
+  "overall_assessment": "NO_VERIFIED_PUBLIC_REPRODUCIBLE_FULL_JAILBREAK_FOR_EXACT_TARGET",
+  "entries": [
+    {
+      "id": "liter8-device-scope",
+      "name": "Liter8 device scope",
+      "status": "tested_other_device_only",
+      "confidence": "high",
+      "detail": "Project README says iPhone 11 only (n104ap); iPhone 11 Pro/Pro Max profiles are experimental and unverified. It does not claim iPhone 12/A14 support.",
+      "url": "https://github.com/Xplo8E/Liter8",
+      "checked": "2026-11-01"
+    },
+    {
+      "id": "liter8-build-24a437",
+      "name": "Liter8 iOS 27.0 build row",
+      "status": "not_target_device",
+      "confidence": "high",
+      "detail": "Build 24A437 is listed as run for iPhone 11 and experimental for iPhone 11 Pro/Pro Max; this is not evidence for iPhone13,2.",
+      "url": "https://github.com/Xplo8E/Liter8",
+      "checked": "2026-11-01"
+    },
+    {
+      "id": "iphone12-support-issue",
+      "name": "iPhone 12 support discussion",
+      "status": "request_not_confirmation",
+      "confidence": "high",
+      "detail": "A recent GitHub issue asks about A14/iPhone 12 support; a request or discussion is not a maintainer-confirmed successful port or reproducible test.",
+      "url": "https://github.com/Xplo8E/Liter8/issues/29",
+      "checked": "2026-11-01"
+    },
+    {
+      "id": "usbliter8-scope",
+      "name": "usbliter8 hardware scope",
+      "status": "not_established_for_a14",
+      "confidence": "medium",
+      "detail": "The current Liter8 project credits usbliter8 and explicitly limits its own tested target to A13 iPhone 11; no A14 iPhone 12 validation is provided there.",
+      "url": "https://github.com/Xplo8E/Liter8",
+      "checked": "2026-11-01"
+    },
+    {
+      "id": "firmware-signing",
+      "name": "iOS 27.0 signing status",
+      "status": "unsigned_reported",
+      "confidence": "medium",
+      "detail": "A third-party firmware catalog reports iOS 27.0 build 24A437 for iPhone13,2 as no longer signed. Check Apple's current signing state before any restore; this app does not recommend restoring.",
+      "url": "https://www.applefirmwares.com/firmware/iPhone13%2C2/27.0",
+      "checked": "2026-11-01"
+    },
+    {
+      "id": "latest-ios-status",
+      "name": "Current iOS firmware context",
+      "status": "27.2_listed",
+      "confidence": "medium",
+      "detail": "The Apple Wiki firmware index lists iOS 27.2 build 24B119 for iPhone13,2 dated 2026-10-26. This is firmware catalog information, not jailbreak support evidence.",
+      "url": "https://theapplewiki.com/wiki/Firmware/iPhone/27.x",
+      "checked": "2026-11-01"
+    }
+  ],
+  "caution": "Evidence records are dated snapshots, not exploit instructions. A result for another ProductType, chip, board, or build must not be treated as proof for iPhone13,2 / A14 / 24A437."
+}
