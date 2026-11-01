@@ -12,29 +12,40 @@ permissions:
 jobs:
   build:
     runs-on: macos-15
+
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: Locate Xcode project
+      - name: Restore Xcode project structure
         run: |
-          echo "Repository files:"
-          find . -maxdepth 5 -print | head -300
+          set -e
 
-          PROJECT_PATH=$(find . -type d -name "*.xcodeproj" -print -quit)
+          mkdir -p i12_Jailbreak_Lab.xcodeproj
+          mkdir -p i12_Jailbreak_Lab/Sources
 
-          if [ -z "$PROJECT_PATH" ]; then
-            echo "::error::没有找到 .xcodeproj 项目文件夹，请检查上传内容。"
-            exit 1
-          fi
+          cp project.pbxproj \
+            i12_Jailbreak_Lab.xcodeproj/project.pbxproj
 
-          echo "Found project: $PROJECT_PATH"
-          echo "PROJECT_PATH=$PROJECT_PATH" >> "$GITHUB_ENV"
+          cp Info.plist i12_Jailbreak_Lab/Info.plist
+
+          cp i12_Jailbreak_LabApp.swift i12_Jailbreak_Lab/Sources/
+          cp DeviceAudit.swift i12_Jailbreak_Lab/Sources/
+          cp DashboardView.swift i12_Jailbreak_Lab/Sources/
+          cp FirmwareManifestAudit.swift i12_Jailbreak_Lab/Sources/
+          cp EvidenceDatabase.swift i12_Jailbreak_Lab/Sources/
+
+          echo "Project structure restored."
+
+      - name: Check Xcode scheme
+        run: |
+          xcodebuild -list \
+            -project i12_Jailbreak_Lab.xcodeproj
 
       - name: Build IPA
         run: |
           xcodebuild \
-            -project "$PROJECT_PATH" \
+            -project i12_Jailbreak_Lab.xcodeproj \
             -scheme i12_Jailbreak_Lab \
             -configuration Release \
             -destination 'generic/platform=iOS' \
@@ -44,11 +55,16 @@ jobs:
 
       - name: Package IPA
         run: |
-          APP=$(find "$RUNNER_TEMP/App.xcarchive/Products/Applications" -maxdepth 1 -name "*.app" -print -quit)
+          set -e
+          APP=$(find "$RUNNER_TEMP/App.xcarchive/Products/Applications" \
+            -maxdepth 1 -name "*.app" -print -quit)
+
           test -n "$APP"
+
           mkdir -p "$RUNNER_TEMP/ipa/Payload"
           cp -R "$APP" "$RUNNER_TEMP/ipa/Payload/"
           cd "$RUNNER_TEMP/ipa"
+
           zip -r "$RUNNER_TEMP/i12-Jailbreak-Lab-unsigned.ipa" Payload
 
       - name: Upload IPA
